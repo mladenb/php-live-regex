@@ -4,7 +4,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 	$regex = $_POST['regex'];
 	$content = $_POST['content'];
 	preg_match_all($regex, $content, $matches);
-	$res = print_r($matches);
+	$res = print_r($matches, true);
 }
 
 $regex = htmlentities($regex);
@@ -15,9 +15,9 @@ echo <<<END_OF_HTML
 <html>
 <body>
 <form action="" method="post">
-	<div><input name="regex" value="$regex" size="80"></div>
-	<div><textarea rows="20" cols="80" name="content">$content</textarea></div>
-	<div>$res</div>
+	<div><input name="regex" value="$regex" placeholder="Regular expression..." style="width: 100%"></div>
+	<div><textarea rows="20" name="content" style="width: 100%" placeholder="Content...">$content</textarea></div>
+	<div style="background-color: #efefef; min-height:10em">$res</div>
 </form>
 </body>
 </html>
