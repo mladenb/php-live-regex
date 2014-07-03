@@ -1,5 +1,16 @@
 <?php
 
+if (get_magic_quotes_gpc()) {
+    function stripslashes_gpc(&$value)
+    {
+        $value = stripslashes($value);
+    }
+    array_walk_recursive($_GET, 'stripslashes_gpc');
+    array_walk_recursive($_POST, 'stripslashes_gpc');
+    array_walk_recursive($_COOKIE, 'stripslashes_gpc');
+    array_walk_recursive($_REQUEST, 'stripslashes_gpc');
+}
+
 if (strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 	$regex = $_POST['regex'];
 	$content = $_POST['content'];
@@ -9,7 +20,7 @@ if (strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 
 $regex = htmlentities($regex);
 $content = htmlentities($content);
-$res = htmlentities($res);
+$res = nl2br(htmlentities($res));
 
 echo <<<END_OF_HTML
 <html>
